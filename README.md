@@ -9,6 +9,7 @@
 | スキル | 内容 |
 | --- | --- |
 | [ai-smell-ja](skills/ai-smell-ja/) | 日本語の決まり文句や文型の繰り返しを確認し、意味を保って書き直す。 |
+| [dads-page-check](skills/dads-page-check/) | DADS β版を参考にWebページの読みやすさと操作を点検し、修正案を出す。 |
 
 ## 使い方
 
