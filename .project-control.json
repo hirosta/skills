@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "project_id": "skills",
+  "repository": "hirosta/skills",
+  "base_branch": "main",
+  "approver_user_id": 6889053,
+  "runner_revision": "f2e4d412751a776e92d738120bb347b694a7b014",
+  "agent_label": "com.hirosta.skills.ai-issues",
+  "paths": {
+    "state": "runtime/ai-issue-runner",
+    "scratch": "runtime/scratch",
+    "worktrees": "runtime/worktrees"
+  },
+  "manual_install_paths": [
+    ".github/*",
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".project-control.json"
+  ],
+  "protected_paths": [
+    "runtime/",
+    ".env"
+  ],
+  "required_checks": [],
+  "verification": "スキルは skills/<スキル名>/ に置く。文書だけの変更は git diff --check で確認する。スクリプトを付けた場合は、Pythonの標準ライブラリだけで動くことを確かめ、同梱した架空の素材で実行して結果を確かめる。依存は入れない。実行で生成したキャッシュ（__pycache__ など）は確認後に削除する（無視対象のファイルが残るとマージと後片付けが止まる）。新規の自動テストは作らない。レビューでは、見つけた問題をすべて一度に挙げる。",
+  "instructions": "AGENTS.mdに従う。このリポジトリは公開されている。報告・PR本文・コミットメッセージ・コメントに、ローカルの絶対パス、ほかのリポジトリの名前やIssue番号、作業の仕組みの設定値を書かない。一時的な作業場所は <一時領域> と書く。認証情報・お客様の情報・実データを入れず、素材はすべて架空にする。測っていない効果を書かない。",
+  "deployment": "none",
+  "allow_ds_store": true,
+  "cleanup_wait_blocks_work": false,
+  "cleanup_cache_names": [
+    "__pycache__",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".mypy_cache"
+  ]
+}
