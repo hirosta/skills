@@ -6,6 +6,20 @@ Webページの文字、色、リンク、キーボード操作、フォーム�
 
 ## 入れ方
 
+### CLIで入れる
+
+Node.js 22.20以上とnpxが使える環境で、導入先のプロジェクトから次を実行します。対話画面で利用するAIエージェントと導入先を確認してください。
+
+```bash
+npx skills add hirosta/skills --skill dads-page-check
+```
+
+リポジトリのスキルをまとめて入れる場合は、`npx skills add hirosta/skills` を実行し、対話画面ですべてのスキルを選びます。
+
+CLIには匿名の利用集計（テレメトリー）があり、環境変数 `DISABLE_TELEMETRY=1` で無効にできます。たとえば、`DISABLE_TELEMETRY=1 npx skills add hirosta/skills --skill dads-page-check` と実行します。詳しくは[公式ドキュメント](https://www.skills.sh/docs)と[FAQ](https://www.skills.sh/docs/faq)を参照してください。
+
+### 手でコピーする
+
 このリポジトリを取得したフォルダーで、次を実行します。同名のスキルがある場合は、内容を確認し、上書きするか決めてからコピーしてください。
 
 ```bash
