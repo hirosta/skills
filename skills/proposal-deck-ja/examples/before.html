@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>架空の提案書見本</title><style>
+
+:root {
+  --client: "架空・こもれび商事株式会社";
+  --subject: "受注受付の手順整理のご提案";
+  --date: "2026年10月24日（架空）";
+  --ink: #243447;
+  --accent: #365e70;
+  --muted: #546575;
+  --paper: #ffffff;
+  --font: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", "Noto Sans JP", sans-serif;
+}
+* { box-sizing: border-box; }
+@page { size: 338.67mm 190.5mm; margin: 0; }
+html { color: var(--ink); font-family: var(--font); line-break: strict; text-autospace: ideograph-alpha; }
+body { margin: 0; background: var(--paper); counter-reset: page; }
+.slide { width: 1280px; height: 720px; padding: 98px 64px 64px; position: relative; overflow: hidden; background: var(--paper); counter-increment: page; break-after: page; }
+.slide:last-child { break-after: auto; }
+.title { position: absolute; left: 64px; top: 26px; margin: 0; font-size: 22pt; line-height: 1.4; }
+.logo { position: absolute; right: 64px; top: 24px; width: 190px; height: 42px; }
+.slide::after { content: counter(page); position: absolute; right: 64px; bottom: 25px; font-size: 15pt; color: var(--muted); }
+h1, h2, h3, th, .message { word-break: auto-phrase; }
+h1, h2, h3 { font-feature-settings: "palt"; }
+.message { font-size: 28pt; line-height: 1.45; margin: 0 0 30px; font-weight: 700; }
+h3 { font-size: 22pt; margin: 0 0 18px; }
+p, li, dd, dt { font-size: 20pt; line-height: 1.65; }
+p { margin: 12px 0; }
+ul, ol { padding-left: 1.5em; margin: 16px 0; }
+li { margin-bottom: 18px; }
+.note { font-size: 15pt; color: var(--muted); line-height: 1.5; }
+.check { border: 2px dashed var(--accent); padding: 2px 8px; display: inline-block; font-size: 15pt; color: var(--accent); }
+.client::before { content: var(--client); }
+.subject::before { content: var(--subject); }
+.date::before { content: var(--date); }
+.cover { padding-top: 40px; }
+.cover .subject { font-size: 36pt; line-height: 1.5; margin: 28px 0; }
+.cover .message { margin: 28px 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.panel { border-top: 4px solid var(--accent); padding-top: 22px; }
+.big { font-size: 58pt; font-variant-numeric: tabular-nums; color: var(--accent); margin: 15px 0; }
+.rule { border-top: 2px solid var(--muted); margin-top: 24px; padding-top: 18px; }
+table { width: 100%; border-collapse: collapse; font-size: 18pt; line-height: 1.5; }
+th, td { border-bottom: 1px solid var(--muted); padding: 13px 16px; text-align: left; }
+th { color: var(--paper); background: var(--accent); font-weight: 600; }
+.money { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.flow { display: flex; align-items: stretch; gap: 12px; font-size: 18pt; margin: 14px 0 28px; }
+.step { flex: 1; border: 1px solid var(--muted); padding: 22px 12px; text-align: center; }
+.arrow { align-self: center; }
+.auto { background: var(--accent); color: var(--paper); border: 4px solid var(--ink); padding: 19px 9px; }
+.gantt td { text-align: center; }
+.bar { background: var(--accent); color: var(--paper); }
+.qa { display: grid; grid-template-columns: 280px 1fr; gap: 24px; padding: 20px 0; border-top: 1px solid var(--muted); }
+.qa p { margin: 0; }
+@media screen {
+  body { width: 1280px; margin: 0 auto; }
+  .slide { outline: 1px solid var(--muted); margin-bottom: 24px; }
+}
+@media screen and (max-width: 1280px) {
+  body { zoom: calc(100vw / 1280px); }
+}
+@media print {
+  .slide { width: 338.67mm; height: 190.5mm; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+
+.cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.cards > div { border:1px solid var(--muted); border-radius:20px; padding:18px; }
+.cards h3 { text-align:center; }
+.cards p, .cards li { font-size:18pt; margin:0; line-height:1.4; }
+.cards ul { margin:8px 0; }
+</style></head><body>
+<section class="slide"><h1 class="title">未来をひらく受付改革</h1><img class="logo" src="logo.svg" alt="みなも企画"><h2 class="message">記録をひとつに。未来の受付へ。</h2><div class="cards"><div><h3>記録を<br>スマートに</h3><p>電話受付は<br>2 回記録</p><ul><li>電話</li><li>メモ</li><li>台帳</li></ul></div><div><h3>仕事を<br>シンプルに</h3><p>台帳に受付項目をそろえる</p><ul><li>集約</li><li>記録</li><li>確認</li></ul></div><div><h3>確認で<br>未来へ</h3><p>担当者が確認する</p><ul><li>時間は要確認</li><li>可否は要確認</li><li>方針を検討</li></ul></div></div><p class="note">架空相談メモの電話受付の例。作業時間と実現可否は要確認</p></section>
+</body></html>

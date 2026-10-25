@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>提案書テンプレート（16:9）</title>
+<!--
+  使い方
+  1. すぐ下の :root の設定（提案先・件名・副題・日付・提案する会社・連絡先）を書き換える。
+     表紙と連絡先の社名や日付はここから入るので、本文に直接書かない（前の提案先の名前が残る事故を防ぐ）。
+  2. 色を変えるときも :root だけを書き換え、文字と背景の色の差を計算し直す（references/design.md）。
+  3. 各ページの .label（ページのタイトル）と .message（そのページの結論）、本文を書き換える。
+     ページを足すときは section class="slide" を丸ごと複製する。ページ番号は自動で振られる。
+  4. 確認が済んでいない事実は span class="tbd" で囲む。破線の枠と「要確認」の文字が付く。
+  5. scripts/build_pdf.py でPDFにする。スクリプト、外部の画像・フォント、CSSのコメントは使えない。
+
+  色は白のほかに3色まで：文字（--ink）、強調（--main）、注意（--caution）。ほかは灰色だけ。
+  文字の大きさ：メッセージ28pt／小見出し22pt／本文20pt／表と図18pt／注記15pt。
+  構成：結論 → 問題提起 → 解決策 → 信頼 → 安心。この見本の会社・数字・連絡先はすべて架空。
+-->
+<style>
+:root{
+  --client:"あおば工務店";
+  --title:"お問い合わせ対応の改善のご提案";
+  --sub:"返信の下書きを先に用意する仕組みづくりと、3か月の運用支援";
+  --date:"2026年10月24日";
+  --company:"みなも企画株式会社";
+  --email:"proposal@example.com";
+
+  --ink:#222222;
+  --main:#365e70;
+  --main-soft:#e8eff2;
+  --caution:#8a5b13;
+  --gray:#5e5e5e;
+  --line:#d6d6d6;
+  --font:"Hiragino Sans","Hiragino Kaku Gothic ProN",Meiryo,"Noto Sans JP","Yu Gothic",sans-serif;
+  --w:338.67mm;
+  --h:190.5mm;
+}
+
+.v-client::before{content:var(--client)}
+.v-title::before{content:var(--title)}
+.v-sub::before{content:var(--sub)}
+.v-date::before{content:var(--date)}
+.v-company::before{content:var(--company)}
+.v-email::before{content:var(--email)}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:#dddddd;color:var(--ink);counter-reset:page;
+  font-family:var(--font);font-size:20pt;line-height:1.6;
+  line-break:strict;word-break:normal;
+  text-autospace:ideograph-alpha;
+  text-spacing-trim:trim-start;
+}
+h1,h2,h3,.message,th,td,dt,.step,.who,.big,.fact{word-break:auto-phrase}
+h1,h2,h3,.message{font-feature-settings:"palt";letter-spacing:.02em}
+h1,h2,h3{margin:0;font-weight:700}
+p{margin:0 0 4mm}
+b,strong{font-weight:700}
+.note{font-size:15pt;line-height:1.6;color:var(--gray)}
+.num{font-variant-numeric:tabular-nums}
+
+.slide{
+  width:var(--w);height:var(--h);margin:0 auto 10mm;background:#ffffff;
+  display:flex;flex-direction:column;overflow:hidden;position:relative;
+  counter-increment:page;
+}
+.top{height:15mm;flex:none;display:flex;justify-content:space-between;align-items:center;
+  padding:0 16mm;border-bottom:1px solid var(--line)}
+.top .label{font-size:15pt;font-weight:700}
+.top img{height:6mm;width:auto;display:block}
+.content{flex:1;min-height:0;padding:10mm 20mm 6mm;display:flex;flex-direction:column}
+.fill{flex:1;min-height:0}
+.bottom{height:11mm;flex:none;display:flex;justify-content:flex-end;align-items:center;padding:0 16mm}
+.bottom .page{font-size:15pt;color:var(--gray);font-variant-numeric:tabular-nums}
+.bottom .page::before{content:counter(page)}
+
+.message{font-size:28pt;line-height:1.45;font-weight:700;margin:0 0 8mm}
+
+.cover{justify-content:center;align-items:center;text-align:center}
+.cover .inner{width:270mm}
+.cover .to{font-size:22pt;font-weight:700;margin:0 0 9mm}
+.cover h1{font-size:44pt;line-height:1.4;margin:0 0 9mm;word-break:auto-phrase}
+.cover .rule{height:2.5px;background:var(--ink);margin:0 auto 8mm}
+.cover .sub{font-size:20pt;margin:0}
+.cover .meta{position:absolute;left:0;right:0;bottom:15mm;display:flex;justify-content:center;align-items:center;gap:10mm;font-size:16pt;color:var(--gray)}
+.cover .meta img{height:9mm;width:auto}
+
+ol.points{list-style:none;margin:0;padding:0;counter-reset:p;display:flex;flex-direction:column;justify-content:space-around}
+ol.points li{counter-increment:p;display:grid;grid-template-columns:16mm 1fr;padding:4mm 0;margin:0;border-top:1px solid var(--line)}
+ol.points li:last-child{border-bottom:1px solid var(--line)}
+ol.points li::before{content:counter(p);font-size:30pt;font-weight:700;color:var(--main);line-height:1.15;font-variant-numeric:tabular-nums}
+ol.points b{display:block;font-size:23pt;line-height:1.4}
+ol.points span{display:block;font-size:18pt;color:var(--gray);line-height:1.5;margin-top:1mm}
+
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
+.fact{border-top:3px solid var(--ink);padding-top:4mm}
+.fact .k{display:block;font-size:17pt;color:var(--gray);font-weight:700}
+.fact .v{display:block;font-size:44pt;font-weight:700;line-height:1.25;font-variant-numeric:tabular-nums}
+.fact .v small{font-size:22pt;margin-left:1mm}
+.fact .d{display:block;font-size:17pt;line-height:1.5;margin-top:1mm}
+
+ul{margin:0;padding-left:7mm}
+li{margin:0 0 4mm}
+
+table{width:100%;border-collapse:collapse;font-size:18pt;line-height:1.5}
+th,td{padding:3.6mm 4mm;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{font-size:15pt;color:var(--gray);font-weight:700;border-bottom:2px solid var(--ink);padding-top:0;padding-bottom:2.5mm}
+tbody th{font-weight:700}
+.yen{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total th,tr.total td{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);font-weight:700}
+table.tall th,table.tall td{padding-top:5mm;padding-bottom:5mm}
+
+table.gantt th,table.gantt td{padding-top:3.2mm;padding-bottom:3.2mm}
+table.gantt td.bar{padding-left:0;padding-right:0;vertical-align:middle}
+table.gantt .on{height:8mm;background:var(--main)}
+table.gantt .half{height:8mm;width:50%;background:var(--main)}
+table.gantt .half.end{margin-left:auto}
+table.gantt th.month{text-align:center}
+table.gantt.tall th,table.gantt.tall td{padding-top:4.5mm;padding-bottom:4.5mm}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14mm}
+.cols h3{font-size:22pt;margin:0 0 5mm;padding-bottom:3mm;border-bottom:2px solid var(--ink)}
+
+.flow{display:grid;grid-template-columns:1fr 14mm 1fr;align-items:stretch}
+.flow .box{border:1.5px solid var(--ink);padding:6mm 7mm}
+.flow .box h3{font-size:18pt;color:var(--gray);margin:0 0 4mm}
+.flow .box li{margin-bottom:5mm}
+.flow .arrow{align-self:center;justify-self:center;width:0;height:0;border:5mm solid transparent;border-left:7mm solid var(--ink);margin-left:4mm}
+.flow .box.goal{border:3px solid var(--main)}
+.flow .box.goal h3{color:var(--main)}
+
+.compare{display:grid;grid-template-rows:1fr 1fr;gap:7mm}
+.lane{display:grid;grid-template-columns:44mm repeat(4,1fr);column-gap:9mm;align-items:center}
+.lane .who{font-size:20pt;font-weight:700;line-height:1.35;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:3px solid var(--ink);padding-right:5mm}
+.lane.after .who{border-right-color:var(--main);color:var(--main)}
+.lane .who small{display:block;font-size:15pt;font-weight:400;color:var(--gray);margin-top:1mm}
+.step{position:relative;border:1.5px solid var(--ink);padding:3mm;min-height:27mm;display:flex;flex-direction:column;justify-content:center;font-size:18pt;font-weight:700;line-height:1.4;text-align:center}
+.step small{display:block;font-size:15pt;font-weight:400;color:var(--gray);margin-top:1mm}
+.step:not(:last-child)::after{content:"";position:absolute;right:-7.5mm;top:50%;transform:translateY(-50%);border:3mm solid transparent;border-left:4.5mm solid var(--ink)}
+.step.slow{border:2px dashed var(--caution);color:var(--caution)}
+.step.slow small{color:var(--caution)}
+.step.ai{border:3px solid var(--main);background:var(--main-soft);padding-top:6mm}
+.step.ai::before{content:"自動";position:absolute;top:-4mm;left:50%;transform:translateX(-50%);background:var(--main);color:#ffffff;font-size:15pt;padding:0 3mm;line-height:1.5}
+
+.price{display:grid;grid-template-columns:1fr 1.15fr;gap:16mm;align-items:start}
+.big{border-top:3px solid var(--ink);padding-top:4mm}
+.big .k{display:block;font-size:18pt;font-weight:700;color:var(--gray)}
+.big .v{display:block;font-size:58pt;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
+.big .v small{font-size:26pt;margin-left:1mm}
+.big .d{display:block;font-size:18pt;margin-top:2mm}
+
+dl.qa{margin:0;display:flex;flex-direction:column;justify-content:space-between}
+dl.qa div{display:grid;grid-template-columns:105mm 1fr;gap:10mm;padding:4.5mm 0;border-bottom:1px solid var(--line)}
+dl.qa div:first-child{border-top:2px solid var(--ink)}
+dt{font-weight:700;font-size:20pt;line-height:1.45}
+dd{margin:0;font-size:18pt;line-height:1.55}
+
+.contact{border:1.5px solid var(--ink);padding:7mm 8mm;align-self:start}
+.contact img{height:9mm;width:auto;display:block;margin-bottom:5mm}
+.contact b{font-size:20pt}
+
+.tbd{display:inline-block;border:1.5px dashed var(--caution);color:var(--caution);border-radius:1mm;
+  padding:0 2mm;font-size:15pt;line-height:1.6;font-weight:700;white-space:nowrap}
+.tbd::before{content:"要確認：";font-weight:700}
+
+@page{size:338.67mm 190.5mm;margin:0}
+@media print{
+  body{background:#ffffff}
+  .slide{margin:0;break-after:page;zoom:1}
+  .slide:last-child{break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media screen{
+  body{padding:10mm 0}
+}
+@media screen and (max-width:1312px){
+  .slide{zoom:calc((100vw - 32px) / 1280px)}
+}
+</style>
+</head>
+<body>
+<main>
+
+<!-- 表紙：ページのタイトルとメッセージは置かない -->
+<section class="slide cover" aria-labelledby="t-cover">
+  <div class="inner">
+    <p class="to"><span class="v-client"></span>様</p>
+    <h1 id="t-cover" class="v-title"></h1>
+    <div class="rule"></div>
+    <p class="sub v-sub"></p>
+  </div>
+  <div class="meta"><span class="v-date"></span><img src="logo.svg" alt="みなも企画"></div>
+</section>
+
+<!-- 結論：判断していただくことを、最後のページと同じ番号で予告する -->
+<section class="slide" aria-labelledby="t1">
+  <header class="top"><span class="label">ご提案の要点</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t1">下書きを先に用意すれば、問い合わせにその日のうちに返信できます</p>
+    <ol class="points fill">
+      <li><div><b>返信の下書きをAIが作り、担当者は確認して送るだけにします</b><span>言い回しは今お使いの返信に合わせます。AIが自動で送ることはありません</span></div></li>
+      <li><div><b>費用や工期など、よくある質問への答えを先にそろえておきます</b><span>誰が返信しても、同じ内容で答えられるようになります</span></div></li>
+      <li><div><b>3か月かけて、実際のお問い合わせで試しながら直していきます</b><span>月額12万円（税抜）。初期費用はかからず、最低契約期間もありません</span></div></li>
+    </ol>
+    <p class="note" style="margin:4mm 0 0">ご判断いただきたいこと：1 ご提案の内容で進めるか　2 開始日　3 1か月目の打ち合わせの日程</p>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 問題提起：お伺いした事実。数字がなければ「要確認」で残す -->
+<section class="slide" aria-labelledby="t2">
+  <header class="top"><span class="label">現状の確認</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t2">現場に出る日は返信が翌日以降になり、ここが一番の課題です</p>
+    <div class="facts">
+      <div class="fact"><span class="k">お問い合わせの件数</span><span class="v">40<small>件前後／月</small></span><span class="d">フォームとメールの合計</span></div>
+      <div class="fact"><span class="k">返信を担当している方</span><span class="v">2<small>名</small></span><span class="d">費用の質問に答えられるのは、このうち1名</span></div>
+    </div>
+    <table style="margin-top:9mm">
+      <tbody>
+        <tr><th scope="row" style="width:34%">最初の返信までの時間</th><td style="width:22%"><span class="tbd">平均</span></td><td>過去3か月分の記録で、1か月目に確かめます</td></tr>
+        <tr><th scope="row">見積りにつながった割合</th><td><span class="tbd">割合</span></td><td>今は記録していないため、2か月目から記録します</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:auto">10月15日のお打ち合わせでお伺いした内容です。</p>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 問題提起：このままだと起きること。一般的な傾向には出典を付ける -->
+<section class="slide" aria-labelledby="t3">
+  <header class="top"><span class="label">現状の確認</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t3">返信が遅れると、相見積りの相手に先を越されるおそれがあります</p>
+    <div class="cols fill">
+      <div>
+        <h3>お客様の側で起きていること</h3>
+        <ul>
+          <li>リフォームや新築の相談は、複数の会社に同時に問い合わせることが多い</li>
+          <li>最初に返事をくれた会社と、話が先に進みやすい</li>
+        </ul>
+      </div>
+      <div>
+        <h3>御社の側で起きていること</h3>
+        <ul>
+          <li>返信が遅れた問い合わせほど、その後のやり取りが続かない</li>
+          <li>返信済みかどうかが分からず、同じ方に二重に返信したことがある</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">お客様の側の傾向は一般的な例です。実際の提案書では、調べた出典を付けます。</p>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 問題提起：原因から方針へ -->
+<section class="slide" aria-labelledby="t4">
+  <header class="top"><span class="label">課題の整理</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t4">遅れの原因は人手ではなく、毎回ゼロから文面を書くことです</p>
+    <div class="flow fill">
+      <div class="box"><h3>原因</h3>
+        <ul><li>同じような質問にも、毎回一から返信を書いている</li><li>費用の答え方が、特定の担当者の頭の中にしかない</li><li>返信の状況を、だれも一覧で見ていない</li></ul></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="box goal"><h3>ご提案の方針</h3>
+        <ul><li>文面の下書きを先に用意し、確認だけで返信できるようにする</li><li>答え方を言葉にして、だれでも使える形にする</li><li>返信の状況を一覧にして、遅れに気付けるようにする</li></ul></div>
+    </div>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 解決策：今と提案後の業務の流れ。自動の作業は塗り・太い枠・「自動」の文字、問題の作業は破線で示す -->
+<section class="slide" aria-labelledby="t5">
+  <header class="top"><span class="label">ご提案の全体像</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t5">AIが下書きを用意するため、担当者は確認して送るだけで済みます</p>
+    <div class="compare fill">
+      <div class="lane">
+        <div class="who">今<small>すべて手作業</small></div>
+        <div class="step">お問い合わせが届く</div>
+        <div class="step">担当者が内容を読む</div>
+        <div class="step slow">一から返信を書く<small>現場の日は翌日以降に</small></div>
+        <div class="step">送信する</div>
+      </div>
+      <div class="lane after">
+        <div class="who">ご提案後<small>書く作業をAIに</small></div>
+        <div class="step">お問い合わせが届く</div>
+        <div class="step ai">AIが下書きを作る<small>よくある質問の答えを使う</small></div>
+        <div class="step">担当者が確認・修正する</div>
+        <div class="step">送信する<small>受け取った日のうちに</small></div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:6mm">受信・下書き済み・返信済みは一覧で確認でき、返信が遅れているお問い合わせはお知らせします。</p>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 解決策：行うことと、それで変わること -->
+<section class="slide" aria-labelledby="t6">
+  <header class="top"><span class="label">ご提案の内容</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t6">メールとフォームは今のまま、返信の前の作業だけを減らします</p>
+    <table class="tall">
+      <thead><tr><th scope="col" style="width:28%">行うこと</th><th scope="col" style="width:40%">内容</th><th scope="col">これで変わること</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">返信の下書きの自動作成</th><td>お問い合わせを読み取り、今の文面に合わせた下書きを作る</td><td>現場に出ている日でも、確認だけで返信できる</td></tr>
+        <tr><th scope="row">よくある質問の整理</th><td>費用の目安・工期・対応地域などの答えと、担当者に回す質問を決める</td><td>だれが返信しても、同じ内容で答えられる</td></tr>
+        <tr><th scope="row">返信の状況の一覧</th><td>受信・下書き済み・返信済みを一覧にし、遅れを知らせる</td><td>返信漏れと二重の返信を防げる</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 解決策：進め方。棒は .on（1か月）、.half（前半）、.half.end（後半）。空欄は「なし」と書く -->
+<section class="slide" aria-labelledby="t7">
+  <header class="top"><span class="label">進め方</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t7">1か月目に準備を終え、2か月目から実際の問い合わせで試せます</p>
+    <table class="gantt">
+      <thead><tr><th scope="col" style="width:27%">作業</th><th scope="col" class="month">1か月目</th><th scope="col" class="month">2か月目</th><th scope="col" class="month">3か月目</th><th scope="col" style="width:33%">御社にお願いすること</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">今の返信の整理</th><td class="bar"><div class="on"></div></td><td class="bar"></td><td class="bar"></td><td>過去3か月分のお問い合わせのご共有</td></tr>
+        <tr><th scope="row">よくある質問の整理</th><td class="bar"><div class="half end"></div></td><td class="bar"><div class="half"></div></td><td class="bar"></td><td>答え方のご確認</td></tr>
+        <tr><th scope="row">下書きの試用と改善</th><td class="bar"></td><td class="bar"><div class="on"></div></td><td class="bar"><div class="half"></div></td><td>使ってみた感想</td></tr>
+        <tr><th scope="row">一覧づくり・手順書</th><td class="bar"></td><td class="bar"><div class="half end"></div></td><td class="bar"><div class="on"></div></td><td>なし</td></tr>
+        <tr><th scope="row">月1回の打ち合わせ</th><td colspan="3" style="text-align:center">毎月（オンライン1時間程度）</td><td>ご出席</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 解決策：お見積り。金額は右寄せ・桁のそろう数字 -->
+<section class="slide" aria-labelledby="t8">
+  <header class="top"><span class="label">お見積り</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t8">費用は月額12万円（税抜）で、初期費用はかかりません</p>
+    <div class="price fill">
+      <div>
+        <div class="big"><span class="k">月額（税抜）</span><span class="v">120,000<small>円</small></span><span class="d">3か月の合計　360,000円（税抜）</span></div>
+        <p class="note" style="margin-top:8mm">最低契約期間はありません。次回の更新日の前日までにご連絡いただければ、その月の終わりで解約できます。</p>
+      </div>
+      <div>
+        <h3 style="font-size:20pt;margin:0 0 4mm;padding-bottom:3mm;border-bottom:2px solid var(--ink)">月額に含まれるもの</h3>
+        <ul>
+          <li>「ご提案の内容」の作業すべて</li>
+          <li>月1回の打ち合わせと、メールでのご相談</li>
+          <li>仕組みの中で使うAIの利用料（合意した範囲）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 信頼：会社・担当・事例。掲載の許可がないものは「要確認」で残す -->
+<section class="slide" aria-labelledby="t9">
+  <header class="top"><span class="label">会社紹介</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t9">地域の中小企業を中心に、事務の作業を減らす支援をしています</p>
+    <div class="cols fill" style="grid-template-columns:1.2fr 1fr">
+      <table>
+        <tbody>
+          <tr><th scope="row" style="width:30%">会社名</th><td class="v-company"></td></tr>
+          <tr><th scope="row">所在地</th><td><span class="tbd">所在地</span></td></tr>
+          <tr><th scope="row">設立</th><td><span class="tbd">設立年月</span></td></tr>
+          <tr><th scope="row">事業内容</th><td>中小企業の事務の改善支援、業務システムの導入支援</td></tr>
+        </tbody>
+      </table>
+      <div>
+        <h3>担当</h3>
+        <p><span class="tbd">担当者名と経歴</span></p>
+        <h3 style="margin-top:8mm">近い事例</h3>
+        <p><span class="tbd">掲載の許可を得た事例</span></p>
+      </div>
+    </div>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 安心：決裁の前に気になること -->
+<section class="slide" aria-labelledby="t10">
+  <header class="top"><span class="label">よくあるご質問</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t10">誤送信や情報の扱いは、担当者の確認と御社名義の運用で防げます</p>
+    <dl class="qa fill">
+      <div><dt>AIが間違った内容を送ってしまいませんか</dt><dd>AIは下書きを作るだけで、送るのは担当者です。費用や工期など約束にあたる内容は、担当者が判断します。</dd></div>
+      <div><dt>社内にITに詳しい人がいなくても使えますか</dt><dd>今お使いのメールとフォームのまま使えるようにします。操作の手順書もお渡しします。</dd></div>
+      <div><dt>お客様の情報はどう扱われますか</dt><dd>仕組みで使うアカウントは御社の名義でご用意いただき、当社は作業に必要な範囲だけを扱います。</dd></div>
+      <div><dt>合わなかった場合はやめられますか</dt><dd>最低契約期間はありません。作った仕組みと手順書は、解約後もそのままお使いいただけます。</dd></div>
+    </dl>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+<!-- 締め：結論のページで予告した判断事項を、同じ番号で回収する -->
+<section class="slide" aria-labelledby="t11">
+  <header class="top"><span class="label">今後の進め方</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t11">開始日を決めていただければ、翌月から準備に入れます</p>
+    <div class="cols fill" style="grid-template-columns:2.6fr 1fr;gap:10mm">
+      <table class="tall">
+        <thead><tr><th scope="col" style="width:38%">ご判断いただきたいこと</th><th scope="col" style="width:24%;white-space:nowrap">目安の時期</th><th scope="col">判断の材料</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1　ご提案の内容で進めるか</th><td><span class="tbd">期日</span></td><td>ご提案の内容とお見積り</td></tr>
+          <tr><th scope="row">2　開始日</th><td style="white-space:nowrap">ご了承の後</td><td>月の途中からでも始められます</td></tr>
+          <tr><th scope="row">3　1か月目の打ち合わせの日程</th><td style="white-space:nowrap">開始日の決定後</td><td>過去3か月分のお問い合わせと返信</td></tr>
+        </tbody>
+      </table>
+      <div class="contact"><img src="logo.svg" alt="みなも企画"><b class="v-company"></b><p class="note v-email" style="margin:2mm 0 0"></p></div>
+    </div>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+
+</main>
+</body>
+</html>
