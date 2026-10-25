@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>修正後の例</title>
+<!-- 修正後の例：before.html と同じ架空の内容を、assets/template.html の部品と決まりで組み直した1枚 -->
+<style>
+:root{
+  --client:"あおば工務店";
+  --title:"お問い合わせ対応の改善のご提案";
+  --sub:"返信の下書きを先に用意する仕組みづくりと、3か月の運用支援";
+  --date:"2026年10月24日";
+  --company:"みなも企画株式会社";
+  --email:"proposal@example.com";
+
+  --ink:#222222;
+  --main:#365e70;
+  --main-soft:#e8eff2;
+  --caution:#8a5b13;
+  --gray:#5e5e5e;
+  --line:#d6d6d6;
+  --font:"Hiragino Sans","Hiragino Kaku Gothic ProN",Meiryo,"Noto Sans JP","Yu Gothic",sans-serif;
+  --w:338.67mm;
+  --h:190.5mm;
+}
+
+.v-client::before{content:var(--client)}
+.v-title::before{content:var(--title)}
+.v-sub::before{content:var(--sub)}
+.v-date::before{content:var(--date)}
+.v-company::before{content:var(--company)}
+.v-email::before{content:var(--email)}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:#dddddd;color:var(--ink);counter-reset:page;
+  font-family:var(--font);font-size:20pt;line-height:1.6;
+  line-break:strict;word-break:normal;
+  text-autospace:ideograph-alpha;
+  text-spacing-trim:trim-start;
+}
+h1,h2,h3,.message,th,td,dt,.step,.who,.big,.fact{word-break:auto-phrase}
+h1,h2,h3,.message{font-feature-settings:"palt";letter-spacing:.02em}
+h1,h2,h3{margin:0;font-weight:700}
+p{margin:0 0 4mm}
+b,strong{font-weight:700}
+.note{font-size:15pt;line-height:1.6;color:var(--gray)}
+.num{font-variant-numeric:tabular-nums}
+
+.slide{
+  width:var(--w);height:var(--h);margin:0 auto 10mm;background:#ffffff;
+  display:flex;flex-direction:column;overflow:hidden;position:relative;
+  counter-increment:page;
+}
+.top{height:15mm;flex:none;display:flex;justify-content:space-between;align-items:center;
+  padding:0 16mm;border-bottom:1px solid var(--line)}
+.top .label{font-size:15pt;font-weight:700}
+.top img{height:6mm;width:auto;display:block}
+.content{flex:1;min-height:0;padding:10mm 20mm 6mm;display:flex;flex-direction:column}
+.fill{flex:1;min-height:0}
+.bottom{height:11mm;flex:none;display:flex;justify-content:flex-end;align-items:center;padding:0 16mm}
+.bottom .page{font-size:15pt;color:var(--gray);font-variant-numeric:tabular-nums}
+.bottom .page::before{content:counter(page)}
+
+.message{font-size:28pt;line-height:1.45;font-weight:700;margin:0 0 8mm}
+
+.cover{justify-content:center;align-items:center;text-align:center}
+.cover .inner{width:270mm}
+.cover .to{font-size:22pt;font-weight:700;margin:0 0 9mm}
+.cover h1{font-size:44pt;line-height:1.4;margin:0 0 9mm;word-break:auto-phrase}
+.cover .rule{height:2.5px;background:var(--ink);margin:0 auto 8mm}
+.cover .sub{font-size:20pt;margin:0}
+.cover .meta{position:absolute;left:0;right:0;bottom:15mm;display:flex;justify-content:center;align-items:center;gap:10mm;font-size:16pt;color:var(--gray)}
+.cover .meta img{height:9mm;width:auto}
+
+ol.points{list-style:none;margin:0;padding:0;counter-reset:p;display:flex;flex-direction:column;justify-content:space-around}
+ol.points li{counter-increment:p;display:grid;grid-template-columns:16mm 1fr;padding:4mm 0;margin:0;border-top:1px solid var(--line)}
+ol.points li:last-child{border-bottom:1px solid var(--line)}
+ol.points li::before{content:counter(p);font-size:30pt;font-weight:700;color:var(--main);line-height:1.15;font-variant-numeric:tabular-nums}
+ol.points b{display:block;font-size:23pt;line-height:1.4}
+ol.points span{display:block;font-size:18pt;color:var(--gray);line-height:1.5;margin-top:1mm}
+
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
+.fact{border-top:3px solid var(--ink);padding-top:4mm}
+.fact .k{display:block;font-size:17pt;color:var(--gray);font-weight:700}
+.fact .v{display:block;font-size:44pt;font-weight:700;line-height:1.25;font-variant-numeric:tabular-nums}
+.fact .v small{font-size:22pt;margin-left:1mm}
+.fact .d{display:block;font-size:17pt;line-height:1.5;margin-top:1mm}
+
+ul{margin:0;padding-left:7mm}
+li{margin:0 0 4mm}
+
+table{width:100%;border-collapse:collapse;font-size:18pt;line-height:1.5}
+th,td{padding:3.6mm 4mm;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+thead th{font-size:15pt;color:var(--gray);font-weight:700;border-bottom:2px solid var(--ink);padding-top:0;padding-bottom:2.5mm}
+tbody th{font-weight:700}
+.yen{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.total th,tr.total td{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);font-weight:700}
+table.tall th,table.tall td{padding-top:5mm;padding-bottom:5mm}
+
+table.gantt th,table.gantt td{padding-top:3.2mm;padding-bottom:3.2mm}
+table.gantt td.bar{padding-left:0;padding-right:0;vertical-align:middle}
+table.gantt .on{height:8mm;background:var(--main)}
+table.gantt .half{height:8mm;width:50%;background:var(--main)}
+table.gantt .half.end{margin-left:auto}
+table.gantt th.month{text-align:center}
+table.gantt.tall th,table.gantt.tall td{padding-top:4.5mm;padding-bottom:4.5mm}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14mm}
+.cols h3{font-size:22pt;margin:0 0 5mm;padding-bottom:3mm;border-bottom:2px solid var(--ink)}
+
+.flow{display:grid;grid-template-columns:1fr 14mm 1fr;align-items:stretch}
+.flow .box{border:1.5px solid var(--ink);padding:6mm 7mm}
+.flow .box h3{font-size:18pt;color:var(--gray);margin:0 0 4mm}
+.flow .box li{margin-bottom:5mm}
+.flow .arrow{align-self:center;justify-self:center;width:0;height:0;border:5mm solid transparent;border-left:7mm solid var(--ink);margin-left:4mm}
+.flow .box.goal{border:3px solid var(--main)}
+.flow .box.goal h3{color:var(--main)}
+
+.compare{display:grid;grid-template-rows:1fr 1fr;gap:7mm}
+.lane{display:grid;grid-template-columns:44mm repeat(4,1fr);column-gap:9mm;align-items:center}
+.lane .who{font-size:20pt;font-weight:700;line-height:1.35;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:3px solid var(--ink);padding-right:5mm}
+.lane.after .who{border-right-color:var(--main);color:var(--main)}
+.lane .who small{display:block;font-size:15pt;font-weight:400;color:var(--gray);margin-top:1mm}
+.step{position:relative;border:1.5px solid var(--ink);padding:3mm;min-height:27mm;display:flex;flex-direction:column;justify-content:center;font-size:18pt;font-weight:700;line-height:1.4;text-align:center}
+.step small{display:block;font-size:15pt;font-weight:400;color:var(--gray);margin-top:1mm}
+.step:not(:last-child)::after{content:"";position:absolute;right:-7.5mm;top:50%;transform:translateY(-50%);border:3mm solid transparent;border-left:4.5mm solid var(--ink)}
+.step.slow{border:2px dashed var(--caution);color:var(--caution)}
+.step.slow small{color:var(--caution)}
+.step.ai{border:3px solid var(--main);background:var(--main-soft);padding-top:6mm}
+.step.ai::before{content:"自動";position:absolute;top:-4mm;left:50%;transform:translateX(-50%);background:var(--main);color:#ffffff;font-size:15pt;padding:0 3mm;line-height:1.5}
+
+.price{display:grid;grid-template-columns:1fr 1.15fr;gap:16mm;align-items:start}
+.big{border-top:3px solid var(--ink);padding-top:4mm}
+.big .k{display:block;font-size:18pt;font-weight:700;color:var(--gray)}
+.big .v{display:block;font-size:58pt;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
+.big .v small{font-size:26pt;margin-left:1mm}
+.big .d{display:block;font-size:18pt;margin-top:2mm}
+
+dl.qa{margin:0;display:flex;flex-direction:column;justify-content:space-between}
+dl.qa div{display:grid;grid-template-columns:105mm 1fr;gap:10mm;padding:4.5mm 0;border-bottom:1px solid var(--line)}
+dl.qa div:first-child{border-top:2px solid var(--ink)}
+dt{font-weight:700;font-size:20pt;line-height:1.45}
+dd{margin:0;font-size:18pt;line-height:1.55}
+
+.contact{border:1.5px solid var(--ink);padding:7mm 8mm;align-self:start}
+.contact img{height:9mm;width:auto;display:block;margin-bottom:5mm}
+.contact b{font-size:20pt}
+
+.tbd{display:inline-block;border:1.5px dashed var(--caution);color:var(--caution);border-radius:1mm;
+  padding:0 2mm;font-size:15pt;line-height:1.6;font-weight:700;white-space:nowrap}
+.tbd::before{content:"要確認：";font-weight:700}
+
+@page{size:338.67mm 190.5mm;margin:0}
+@media print{
+  body{background:#ffffff}
+  .slide{margin:0;break-after:page;zoom:1}
+  .slide:last-child{break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media screen{
+  body{padding:10mm 0}
+}
+@media screen and (max-width:1312px){
+  .slide{zoom:calc((100vw - 32px) / 1280px)}
+}
+</style>
+</head>
+<body>
+<main>
+<section class="slide" aria-labelledby="t1">
+  <header class="top"><span class="label">現状の確認</span><img src="logo.svg" alt="みなも企画"></header>
+  <div class="content">
+    <p class="message" id="t1">電話の受付は記録が2回あるため、台帳への1回にまとめます</p>
+    <div class="facts">
+      <div class="fact"><span class="k">電話の受付の記録</span><span class="v">2<small>回</small></span><span class="d">手元のメモと台帳</span></div>
+      <div class="fact"><span class="k">1件あたりの書き写しの時間</span><span class="v"><span class="tbd">作業時間</span></span><span class="d">試行の間に担当者の記録で測る</span></div>
+    </div>
+    <table style="margin-top:8mm">
+      <thead><tr><th scope="col" style="width:26%">項目</th><th scope="col" style="width:37%">今</th><th scope="col">見直し後</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">記録する場所</th><td>手元のメモと台帳</td><td>台帳だけ（受付の項目をそろえる）</td></tr>
+        <tr><th scope="row">内容を確かめる人</th><td>担当者</td><td>担当者（変えない）</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:auto">架空の相談メモの例です。台帳に直接記録できるかは <span class="tbd">連携の条件</span></p>
+  </div>
+  <footer class="bottom"><span class="page"></span></footer>
+</section>
+</main>
+</body>
+</html>
