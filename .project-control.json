@@ -4,7 +4,7 @@
   "repository": "hirosta/skills",
   "base_branch": "main",
   "approver_user_id": 6889053,
-  "runner_revision": "bb6b79e90828ad180d1a6232fe9436fdd5999caa",
+  "runner_revision": "f6ebb10711552b8f23295b90d3ee54c03c3d8be4",
   "agent_label": "com.hirosta.skills.ai-issues",
   "paths": {
     "state": "runtime/ai-issue-runner",
