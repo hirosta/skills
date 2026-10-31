@@ -1,0 +1,4 @@
+kind,invoice_id,issuer,registration,recipient,issue_date,due_date,basis,rounding,closing_day,payment_months,payment_day,weekend,invoice_amount,paid_amount,history,transaction_date,description,rate,reduced,amount,tax
+header,架空-06,架空会社・雲つみ請求工房,T0000000000000,,2026-09-30,2026-10-30,税抜,切り捨て,末,1,末,前,1100,0,いつも期日どおり,,,,,,
+line,架空-06,,,,,,,,,,,,,,,2026-09-15,架空の資料作成,10,いいえ,1000,100
+total,架空-06,,,,,,,,,,,,,,,,,10,,1000,100
