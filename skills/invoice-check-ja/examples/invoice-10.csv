@@ -1,0 +1,6 @@
+kind,invoice_id,issuer,registration,recipient,issue_date,due_date,basis,rounding,closing_day,payment_months,payment_day,weekend,invoice_amount,paid_amount,history,transaction_date,description,rate,reduced,amount,tax
+header,架空-10,架空会社・雲つみ請求工房,T9000000000000,架空会社・紙ふね商会,令和8年9月20日,令和8年11月10日,税込,四捨五入,20,2,10,次,2180,2180,いつも期日どおり,,,,,,
+line,架空-10,,,,,,,,,,,,,,,令和8年9月15日,架空の資料作成,10,いいえ,1100,100
+total,架空-10,,,,,,,,,,,,,,,,,10,,1100,100
+line,架空-10,,,,,,,,,,,,,,,令和8年9月16日,架空の軽減対象食品,8,はい,1080,80
+total,架空-10,,,,,,,,,,,,,,,,,8,,1080,80
