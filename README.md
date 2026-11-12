@@ -14,6 +14,7 @@
 | [proposal-deck-ja](skills/proposal-deck-ja/) | 日本語の提案書を固定のHTML部品で組み、横向き16:9のPDFを作る。 |
 | [dads-page-check](skills/dads-page-check/) | DADS β版を参考にWebページの読みやすさと操作を点検し、修正案を出す。 |
 | [invoice-check-ja](skills/invoice-check-ja/) | 日本の請求書の記載事項・税額・期日を点検し、催促の文面を下書きする。 |
+| [x-post-check-ja](skills/x-post-check-ja/) | 会社のXの投稿原稿を公開前に点検し、直す点・修正案・人が確かめる点を返す。 |
 
 ## 使い方
 
