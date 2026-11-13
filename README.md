@@ -10,6 +10,7 @@
 | --- | --- |
 | [ai-smell-ja](skills/ai-smell-ja/) | 日本語の決まり文句や文型の繰り返しを確認し、意味を保って書き直す。 |
 | [internal-notice-ja](skills/internal-notice-ja/) | 社内のお知らせ・週報・連絡を、読み手と転送先に合わせて書く。 |
+| [jiko-houkoku-ja](skills/jiko-houkoku-ja/) | 事故・障害の原因と再発防止策を責めない形でまとめ、社外へのお詫び・お知らせを別に下書きする。 |
 | [gijiroku-ja](skills/gijiroku-ja/) | 打ち合わせの記録を決定・宿題・持ち帰り・持ち越しに分け、内容確認のメールを下書きする。 |
 | [proposal-deck-ja](skills/proposal-deck-ja/) | 日本語の提案書を固定のHTML部品で組み、横向き16:9のPDFを作る。 |
 | [dads-page-check](skills/dads-page-check/) | DADS β版を参考にWebページの読みやすさと操作を点検し、修正案を出す。 |
