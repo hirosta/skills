@@ -16,6 +16,7 @@
 | [dads-page-check](skills/dads-page-check/) | DADS β版を参考にWebページの読みやすさと操作を点検し、修正案を出す。 |
 | [invoice-check-ja](skills/invoice-check-ja/) | 日本の請求書の記載事項・税額・期日を点検し、催促の文面を下書きする。 |
 | [x-post-check-ja](skills/x-post-check-ja/) | 会社のXの投稿原稿を公開前に点検し、直す点・修正案・人が確かめる点を返す。 |
+| [task-brief-check-ja](skills/task-brief-check-ja/) | AIエージェントに渡す日本語の依頼文を点検し、決めることと書き直し案を返す。 |
 
 ## 使い方
 
