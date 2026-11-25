@@ -174,15 +174,22 @@ def check_operations(lines):
             yield f"参考 {number}行目 {name}の許可・禁止・人の確認を示す記載の候補があります。"
 
 
+def quote_words(pattern, line):
+    """見つかった語を出現順に重複なく「」で囲んで並べる。秘密の情報の候補には使わない。"""
+    return "".join(f"「{word}」" for word in dict.fromkeys(pattern.findall(line)))
+
+
 def check_brief(lines, formats):
     yield from check_sections(lines)
     for number, line in enumerate(lines, 1):
         if PRIVATE_VALUE.search(unicodedata.normalize("NFKC", line)):
             yield f"△ {number}行目 秘密の情報の候補"
-        if CONTEXT_WORDS.search(line):
-            yield f"△ {number}行目 会話や記憶に頼る語の候補"
-        if VAGUE_WORDS.search(line):
-            yield f"△ {number}行目 あいまいな語の候補"
+        context = quote_words(CONTEXT_WORDS, line)
+        if context:
+            yield f"△ {number}行目 会話や記憶に頼る語の候補：{context}"
+        vague = quote_words(VAGUE_WORDS, line)
+        if vague:
+            yield f"△ {number}行目 あいまいな語の候補：{vague}"
         template = find_format(line, formats)
         if template is not None and not matches_format(line, template):
             yield f"△ {number}行目 指定の書式と一致しません。"

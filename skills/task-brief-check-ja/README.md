@@ -49,7 +49,7 @@ python3 skills/task-brief-check-ja/scripts/check_brief.py \
 | 調査 | [修正前](examples/research-before.txt) | [修正後](examples/research-after.txt) | 1 / 3 → 0 / 0 | 1 → 0 |
 | データの整理 | [修正前](examples/data-before.txt) | [修正後](examples/data-after.txt) | 3 / 3 → 0 / 0 | 1 → 0 |
 
-件数は検出項目の一致数です。依頼文の良し悪しの点数には使えません。同じ行に同じ種類の曖昧な語が複数あっても、その種類は1件として表示します。
+件数は検出項目の一致数です。依頼文の良し悪しの点数には使えません。同じ行に同じ種類の曖昧な語が複数あっても、その種類は1件として数え、見つかった語を「」で囲んで並べます。秘密の情報の候補は、値を写さないよう行番号だけを表示します。
 
 ## 分かっていないこと・範囲外
 
